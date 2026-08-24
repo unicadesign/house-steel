@@ -3,7 +3,8 @@
 Pit-crew lab log for **ATOM-0** — a 1 kg two-wheel punching robot.
 Teachable jab. Pixel arcade twin. Not LEGO. Not a 2 m humanoid this quarter.
 
-**Live:** (set after Vercel)
+**Live:** [https://house-steel-omega.vercel.app](https://house-steel-omega.vercel.app)  
+**Repo:** [unicadesign/house-steel](https://github.com/unicadesign/house-steel)
 
 ## Run locally
 
@@ -12,7 +13,7 @@ npm install
 npm run dev
 ```
 
-Open the pit, then **LAB**. Keyboard: WASD drive, J punch, Space kill, R record, P play.
+Open the pit, then **LAB**. Keyboard: WASD drive, J punch, Space kill, R record, P play. Gamepad works. Touch stick on phones.
 
 ## Firmware later
 
@@ -25,10 +26,10 @@ Same JSON as the twin. See `docs/PROTOCOL.md` and `firmware/include/protocol.h`.
 
 ## Agents
 
-- [`/llms.txt`](./public/llms.txt)
+- [`/llms.txt`](https://house-steel-omega.vercel.app/llms.txt)
 - [`docs/AGENTS.md`](./docs/AGENTS.md)
-- OpenAPI: `/openapi.yaml`
-- MCP: `node mcp/server.mjs`
+- OpenAPI: [`/openapi.yaml`](https://house-steel-omega.vercel.app/openapi.yaml)
+- MCP: `HOUSE_STEEL_URL=https://house-steel-omega.vercel.app node mcp/server.mjs`
 
 ## Pages
 
