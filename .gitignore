@@ -1,0 +1,19 @@
+node_modules
+.vercel
+.output
+.tanstack
+.nitro
+dist
+artifacts
+screenshots
+*.log
+.DS_Store
+.env
+.env.*
+!.env.example
+/tmp
+.grok/skills
+.grok/references
+# Sandbox contract — GitHub agents should read docs/AGENTS.md
+/AGENTS.md
+.grok/status

@@ -1,0 +1,34 @@
+# HOUSE STEEL
+
+Pit-crew lab log for ATOM-0, a 1 kg two-wheel punching robot.
+Pixel arcade twin. Teachable moves. Not LEGO. Not a humanoid this quarter.
+
+## For agents
+
+Do not scrape the canvas. Use the HTTP API or MCP.
+
+- Spec: GET /api/spec
+- Moves: GET /api/moves
+- Get move: GET /api/moves/{id}
+- Play: POST /api/moves/{id}/play
+- Record start: POST /api/record/start
+- Record stop: POST /api/record/stop   JSON { "name": "JAB", "frames": [...] }
+- Live command: POST /api/command      JSON { "v":0, "drive":{"left":0,"right":0}, "arm":{"extend":0}, "kill":false }
+- Episodes: GET /api/episodes
+- OpenAPI: /openapi.yaml
+- Protocol docs: /spec and docs/PROTOCOL.md
+- Agent guide: docs/AGENTS.md
+
+Protocol JSON keys: drive, arm, record, play, kill. Version 0.
+Types: src/lib/protocol/types.ts
+Firmware header: firmware/include/protocol.h
+
+MCP: node mcp/server.mjs
+Tools: list_moves, play_move, get_spec, get_episode
+
+Human UI: / (pit) /lab (twin) /spec /log /crew /firmware
+Kill is Space. Record 1–3 s. Name the clip. Play it back.
+Seed move: JAB.
+
+Run locally: npm run dev
+Build: npm run build

@@ -1,0 +1,169 @@
+openapi: 3.1.0
+info:
+  title: House Steel API
+  version: "0"
+  description: >
+    One protocol. JSON {drive, arm, record, play, kill}.
+    Shared by the digital twin, this HTTP API, MCP, and ESP32-S3 firmware.
+servers:
+  - url: /
+paths:
+  /api/spec:
+    get:
+      summary: Robot spec and protocol keys
+      operationId: getSpec
+      responses:
+        "200":
+          description: ATOM-0 spec
+  /api/moves:
+    get:
+      summary: List named moves
+      operationId: listMoves
+      responses:
+        "200":
+          description: Move metadata (seed + server)
+    post:
+      summary: Store a clip (ephemeral on serverless)
+      operationId: createMove
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MoveClip"
+      responses:
+        "201":
+          description: Stored
+  /api/moves/{id}:
+    get:
+      summary: Get a clip including frames
+      operationId: getMove
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string }
+      responses:
+        "200": { description: Clip }
+        "404": { description: Missing }
+  /api/moves/{id}/play:
+    post:
+      summary: Play a named move (returns frames; does not scrape the canvas)
+      operationId: playMove
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string }
+      responses:
+        "200": { description: Frames to execute }
+  /api/record/start:
+    post:
+      summary: Arm recorder
+      operationId: recordStart
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name: { type: string }
+                durationSec: { type: number, minimum: 1, maximum: 3 }
+      responses:
+        "200": { description: Recording armed }
+  /api/record/stop:
+    post:
+      summary: Stop recorder and save frames
+      operationId: recordStop
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [frames]
+              properties:
+                name: { type: string }
+                frames:
+                  type: array
+                  items:
+                    $ref: "#/components/schemas/Frame"
+      responses:
+        "200": { description: Saved clip }
+  /api/command:
+    post:
+      summary: Submit a live HouseSteelCommand
+      operationId: command
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Command"
+      responses:
+        "200": { description: Applied or echoed }
+  /api/episodes:
+    get:
+      summary: Pit log episodes
+      operationId: listEpisodes
+      responses:
+        "200": { description: Episodes }
+  /api/episodes/{id}:
+    get:
+      summary: One episode
+      operationId: getEpisode
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string }
+      responses:
+        "200": { description: Episode }
+components:
+  schemas:
+    Drive:
+      type: object
+      properties:
+        left: { type: number, minimum: -1, maximum: 1 }
+        right: { type: number, minimum: -1, maximum: 1 }
+    Arm:
+      type: object
+      properties:
+        extend: { type: number, minimum: 0, maximum: 1 }
+    Frame:
+      type: object
+      properties:
+        t: { type: number }
+        drive: { $ref: "#/components/schemas/Drive" }
+        arm: { $ref: "#/components/schemas/Arm" }
+    Command:
+      type: object
+      properties:
+        v: { type: integer, const: 0 }
+        drive: { $ref: "#/components/schemas/Drive" }
+        arm: { $ref: "#/components/schemas/Arm" }
+        record:
+          type: object
+          properties:
+            action: { type: string, enum: [start, stop] }
+            name: { type: string }
+            durationSec: { type: number }
+        play:
+          type: object
+          properties:
+            id: { type: string }
+            name: { type: string }
+        kill: { type: boolean }
+    MoveClip:
+      type: object
+      properties:
+        id: { type: string }
+        name: { type: string }
+        createdAt: { type: string }
+        durationMs: { type: number }
+        sampleHz: { type: number }
+        origin: { type: string, enum: [seed, crew, api] }
+        frames:
+          type: array
+          items:
+            $ref: "#/components/schemas/Frame"
