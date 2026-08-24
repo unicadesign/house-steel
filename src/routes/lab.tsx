@@ -1,17 +1,7 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { Arena } from "@/components/twin/arena";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/lab")({
-  component: Lab,
-  head: () => ({
-    meta: [{ title: "LAB · HOUSE STEEL" }],
-  }),
+  beforeLoad: () => {
+    throw redirect({ to: "/log" });
+  },
 });
-
-function Lab() {
-  return (
-    <main>
-      <Arena />
-    </main>
-  );
-}

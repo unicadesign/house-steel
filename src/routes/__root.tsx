@@ -14,7 +14,8 @@ export const Route = createRootRoute({
       { title: APP_NAME },
       {
         name: "description",
-        content: "Pit-crew lab log for ATOM-0. Teachable jab. 1 kg. Not a humanoid this quarter.",
+        content:
+          "A family in Serbia is building a real combat robot. This site is the garage log. Not LEGO. Not a toy story.",
       },
       { name: "theme-color", content: "#0a0a0c" },
     ],
@@ -40,7 +41,7 @@ function Root() {
       <head>
         <HeadContent />
       </head>
-      <body className="bg-pit text-paper antialiased">
+      <body className="bg-pit text-paper">
         <PreviewHostBridge />
         <AuthProvider>
           <PixelShell>

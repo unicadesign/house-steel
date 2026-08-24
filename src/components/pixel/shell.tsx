@@ -3,16 +3,13 @@ import type { ReactNode } from "react";
 
 const NAV = [
   { to: "/", label: "PIT" },
-  { to: "/lab", label: "LAB" },
-  { to: "/spec", label: "SPEC" },
   { to: "/log", label: "LOG" },
+  { to: "/spec", label: "SPEC" },
   { to: "/crew", label: "CREW" },
-  { to: "/firmware", label: "FW" },
 ] as const;
 
 export function PixelShell({ children }: { children: ReactNode }) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
-  const lab = pathname === "/lab";
 
   return (
     <div className="relative min-h-dvh bg-pit text-paper">
@@ -50,11 +47,14 @@ export function PixelShell({ children }: { children: ReactNode }) {
           })}
         </nav>
         <div className="hidden items-center border-l-4 border-edge px-3 font-display text-[8px] text-fog md:flex">
-          ATOM-0
-          <span className="ml-2 text-ok">● LIVE</span>
+          BELGRADE
+          <span className="ml-2 text-amber">● PIT</span>
         </div>
       </header>
-      <div className={lab ? "relative z-10" : "relative z-10 mx-auto w-full max-w-6xl"}>{children}</div>
+      <div className="relative z-10 mx-auto w-full max-w-6xl">{children}</div>
+      <footer className="relative z-10 mt-8 border-t-4 border-edge bg-graphite px-4 py-4 font-display text-[8px] text-fog sm:px-8">
+        HOUSE STEEL · GARAGE LOG · NOT A TOY
+      </footer>
     </div>
   );
 }

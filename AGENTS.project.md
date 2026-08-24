@@ -1,8 +1,7 @@
 # House Steel — project instructions
 
-Pit-crew lab log for a real 1 kg fighting robot (ATOM-0). Pixel arcade UI.
-Protocol JSON {drive, arm, record, play, kill} is shared by twin, HTTP, MCP, firmware.
+Garage build log for a real combat robot. Pixel arcade UI. Graphite + amber.
 
-Do not add auth, a shop, LEGO copy, or a fake neural net.
-Keep graphite + amber pixel HUD. Kill is Space.
-See docs/AGENTS.md and public/llms.txt.
+Pages: `/` `/log` `/spec` `/crew`. Spec fields stay TBD until the garage fills them.
+Do not add auth, a shop, LEGO copy, a fake neural net, or a 2 m humanoid.
+The robot is built in the garage, not in this repo.
